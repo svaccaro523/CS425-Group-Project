@@ -10,10 +10,10 @@ drop table address;
 
 CREATE TABLE product(
   productID      INT,
-  category       VARCHAR(50),
+  category       VARCHAR(16),
   alcoholContent NUMERIC(4,2),  
   pSize          INT,
-  name           VARCHAR(50),
+  name           VARCHAR(16),
   calories       INT,
   servingSize    INT,
   fatContent     INT,
@@ -24,7 +24,7 @@ CREATE TABLE product(
 
 CREATE TABLE pricing(
   productID   INT,
-  state       VARCHAR(50),
+  state       VARCHAR(2),
   price       INT, 
   PRIMARY KEY (productID, state),
   FOREIGN KEY (productID) REFERENCES product
@@ -34,7 +34,7 @@ CREATE TABLE pricing(
 CREATE TABLE customer(
   customerID     INT NOT NULL,
   currentBalance NUMERIC(6,2),
-  customerName   VARCHAR(80),
+  customerName   VARCHAR(32),
   age            INT,
   ccNumber       NUMERIC(16,0),
   PRIMARY KEY(customerID)
@@ -45,7 +45,7 @@ CREATE TABLE orders(
   productID     INT NOT NULL,
   orderID       INT NOT NULL, 
   totalCost     NUMERIC(6,2),
-  status        VARCHAR(10),
+  status        VARCHAR(8),
   month         INT,
   day           INT,
   year          INT,
@@ -71,10 +71,10 @@ CREATE TABLE consistsOf(
 CREATE TABLE address
 (
   addressID      INT,
-  city           VARCHAR(50),
+  city           VARCHAR(16),
   state          CHAR(2),
   zip            NUMERIC(5,0),
-  streetName     VARCHAR(50),
+  streetName     VARCHAR(32),
   streetNumber   NUMERIC(3,0),
   aptNo          NUMERIC(3,0),
   PRIMARY KEY (addressID)
@@ -82,7 +82,7 @@ CREATE TABLE address
 
 CREATE TABLE supplier
 (
-  name         VARCHAR (50),
+  name         VARCHAR (32),
   price        NUMERIC (5,2),
   addressID    INT,
   warehouseID  INT,
@@ -102,9 +102,9 @@ CREATE TABLE staffMember
 (
   employeeID    NUMERIC (5,2),
   addressID     INT,
-  firstName     VARCHAR (50),
-  lastName      VARCHAR (50),
-  jobTitle      VARCHAR (50),
+  firstName     VARCHAR (32),
+  lastName      VARCHAR (32),
+  jobTitle      VARCHAR (16),
   salary        NUMERIC (6,2),
   warehouseID   INT,
   PRIMARY KEY (employeeID),
