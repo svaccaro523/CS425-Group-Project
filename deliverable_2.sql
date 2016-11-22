@@ -7,17 +7,41 @@ drop table staffMember;
 drop table warehouse;
 drop table address;
 
+CREATE TABLE address
+(
+  addressID      INT,
+  city           VARCHAR(16),
+  st             CHAR(2) NOT NULL,
+  zip            NUMERIC(5,0),
+  streetName     VARCHAR(32),
+  streetNumber   NUMERIC(3,0),
+  aptNo          NUMERIC(3,0),
+  PRIMARY KEY (addressID)
+);
+
+CREATE TABLE warehouse(
+  WarehouseID       INT,
+  AddressID         INT,
+  storageCapacity   INT,
+  PRIMARY KEY (warehouseID),
+  FOREIGN KEY (addressID) REFERENCES address 
+);
+
 CREATE TABLE product(
-  productID      INT,
-  category       VARCHAR(16),
-  alcoholContent NUMERIC(4,2),  
-  pSize          INT,
-  name           VARCHAR(16),
-  calories       INT,
-  servingSize    INT,
-  fatContent     INT,
-  sodiumContent  INT,
-  PRIMARY KEY (productID)
+  productID        INT,
+  warehouseID      INT,
+  quantityInWH     INT,
+  quantityInOrder  INT,
+  category         VARCHAR(16),
+  alcoholContent   NUMERIC(4,2),  
+  pSize            INT,
+  name             VARCHAR(16),
+  calories         INT,
+  servingSize      INT,
+  fatContent       INT,
+  sodiumContent    INT,
+  PRIMARY KEY (productID),
+  FOREIGN KEY (warehouseID) REFERENCES warehouse
 );
 
 CREATE TABLE pricing(
@@ -37,18 +61,6 @@ CREATE TABLE customer(
   ccNumber       NUMERIC(16,0),
   PRIMARY KEY(customerID),
   CHECK (age>=0)
-);
-
-CREATE TABLE address
-(
-  addressID      INT,
-  city           VARCHAR(16),
-  st             CHAR(2) NOT NULL,
-  zip            NUMERIC(5,0),
-  streetName     VARCHAR(32),
-  streetNumber   NUMERIC(3,0),
-  aptNo          NUMERIC(3,0),
-  PRIMARY KEY (addressID)
 );
 
 CREATE TABLE orders(
@@ -71,7 +83,6 @@ CREATE TABLE orders(
   CHECK (year BETWEEN 1950 AND 2050)
 );
 
-
 CREATE TABLE supplier
 (
   name         VARCHAR (32),
@@ -85,13 +96,7 @@ CREATE TABLE supplier
   CHECK (price>=0)
 );
 
-CREATE TABLE warehouse(
-  WarehouseID       INT,
-  AddressID         INT,
-  storageCapacity   INT,
-  PRIMARY KEY (warehouseID),
-  FOREIGN KEY (addressID) REFERENCES address 
-);
+
 
 CREATE TABLE staffMember
 (
